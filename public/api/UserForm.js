@@ -1,3 +1,5 @@
+"use strict";
+
 class UserForm {
   constructor() {
     this.loginForm = document.getElementById('login');
@@ -38,9 +40,31 @@ class UserForm {
     this.registerForm.reset();
   }
 
-  getData(form) {
+  getData(form) {   
     const login = form.querySelector('[name="email"]').value;
     const password = form.querySelector('[name="password"]').value;
     return { login, password };
   }
 }
+
+const userForm = new UserForm();
+
+userForm.loginFormCallback = (data) => {
+    ApiConnector.login(data, (response) => {
+        if (response.success) {
+            location.reload();
+        } else {
+            console.log(response.error);
+        }
+    });
+};
+
+userForm.registerFormCallback = (data) => {
+    ApiConnector.register(data, (response) => {
+        if (response.success) {
+            location.reload();
+        } else {
+            console.log(response.error);
+        }
+    });
+};
