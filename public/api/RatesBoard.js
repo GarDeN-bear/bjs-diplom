@@ -1,3 +1,4 @@
+"use strict";
 
 class RatesBoard {
   constructor() {
@@ -19,3 +20,20 @@ class RatesBoard {
     this.tableBody.innerHTML = '';
   }
 }
+
+
+const ratesBoard = new RatesBoard();
+
+function getStocksRequest() {
+    ApiConnector.getStocks((response) => {
+        if (response.success) {
+            ratesBoard.clearTable();
+            ratesBoard.fillTable(response.data);
+            console.log("2");
+        }
+    });
+}
+
+const delay = 1000 * 60;
+
+setInterval(getStocksRequest, delay);
