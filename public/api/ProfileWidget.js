@@ -17,3 +17,10 @@ class ProfileWidget {
     profileMoney.querySelector('[data-user-wallet-ntc]').innerText = data.balance.NTC.toPrecision(5);
   }
 }
+
+
+ApiConnector.current((response) => {
+    if (response.success) {
+        ProfileWidget.showProfile(response.data);
+    }
+});
