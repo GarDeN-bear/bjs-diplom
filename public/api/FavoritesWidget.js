@@ -60,37 +60,3 @@ class FavoritesWidget {
     setTimeout(() => { this.favoritesMessageBox.style.display = 'none'; }, 5000);
   }
 }
-
-const favoritesWidget = new FavoritesWidget();
-
-function updateUsersList(response, msgSuccess, msgFailure) {
-    if (response.success) {
-        favoritesWidget.clearTable();
-        favoritesWidget.fillTable(response.data);
-        moneyManager.updateUsersList(response.data);
-        if (msgSuccess) {
-            favoritesWidget.setMessage(response.success, msgSuccess);
-        }
-    } else {
-        if (msgFailure) {
-            favoritesWidget.setMessage(response.success, msgFailure);
-        }
-    }
-}
-
-ApiConnector.getFavorites((response) => {
-    updateUsersList(response);
-});
-
-favoritesWidget.addUserCallback = (data) => {
-    ApiConnector.addUserToFavorites(data, (response) => {
-        updateUsersList(response, "Добавление пользователя в список избранных выполено!", "Добавление пользователя в список избранных не выполено!");
-    });
-};
-
-favoritesWidget.removeUserCallback = (data) => {
-    console.log("remove");
-    ApiConnector.removeUserFromFavorites(data, (response) => {
-        updateUsersList(response, "Удаление пользователя из избранного выполено!", "Удаление пользователя из избранного не выполено!");
-    });
-};

@@ -75,32 +75,3 @@ class MoneyManager {
     });
   }
 }
-
-const moneyManager = new MoneyManager();
-
-function checkResponse(response, msgSuccess, msgFailure) {
-    if (response.success) {
-        ProfileWidget.showProfile(response.data);
-        moneyManager.setMessage(response.success, msgSuccess);
-    } else {
-        moneyManager.setMessage(response.success, msgFailure);
-    }
-}
-
-moneyManager.addMoneyCallback = (data) => {
-    ApiConnector.addMoney(data, (response) => {
-        checkResponse(response, "Пополнение баланса выполнено!", "Пополнение баланса не выполнено!");
-    });
-};
-
-moneyManager.conversionMoneyCallback = (data) => {
-    ApiConnector.convertMoney(data, (response) => {
-        checkResponse(response, "Конвертирование валюты выполнено!", "Конвертирование валюты не выполнено!");
-    });
-};
-
-moneyManager.sendMoneyCallback = (data) => {
-    ApiConnector.transferMoney(data, (response) => {
-        checkResponse(response, "Перевод валюты выполнен!", "Перевод валюты не выполнен!");
-    });
-};
